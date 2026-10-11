@@ -35,6 +35,14 @@ El proyecto está construido con el patrón **MVC (Modelo, Vista, Controlador)**
 <h3>Reglas</h3>
 <img width="1688" height="490" alt="image" src="https://github.com/user-attachments/assets/8b363da9-8b59-41ca-b243-a18a2bd74989" />
 
+## Tecnologías utilizadas
+
+- **Python** + **Flask**: servidor web y rutas (Blueprints)
+- **MySQL**: base de datos relacional, alojada en **Aiven**
+- **Jinja2**: plantillas HTML dinámicas
+- **Bootstrap 5**: diseño visual responsivo
+- **python-dotenv**: manejo de variables de entorno
+- **Gunicorn**: servidor para el despliegue
 
 ## Autor
 | [<img src="https://github.com/Lapuchulfa.png" width=115><br><sub><Tu nombre></sub>](https://github.com/Lapuchulfa) |
