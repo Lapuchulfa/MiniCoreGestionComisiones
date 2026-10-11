@@ -36,25 +36,32 @@ def reporte():
     fecha_fin = request.args.get("fecha_fin")
     
     filas = []
+    error = False
+    
     if fecha_inicio and fecha_fin:
-        resultados = venta_model.reporte_por_periodo(fecha_inicio, fecha_fin)
-        for fila in resultados:
-            regla_aplicable = regla_model.obtener_aplicable(fila["total_ventas"])
-            if regla_aplicable:
-                porcentaje = regla_aplicable["porcentaje_comision"]
-                monto_comision = comision_model.calcular(fila["total_ventas"], porcentaje)
-            else:
-                porcentaje = 0
-                monto_comision = 0
-            filas.append({
-                "vendedor_nombre": f"{fila['nombre']} {fila['apellido']}",
-                "total_ventas": fila["total_ventas"],
-                "porcentaje_comision": porcentaje,
-                "monto_comision": monto_comision,
-            })
+        if fecha_inicio > fecha_fin:
+            flash("La fecha inicio debe suceder no puede ser posterior a la fehca fin.")
+            error = True
+        else:
+            resultados = venta_model.reporte_por_periodo(fecha_inicio, fecha_fin)
+            for fila in resultados:
+                regla_aplicable = regla_model.obtener_aplicable(fila["total_ventas"])
+                if regla_aplicable:
+                    porcentaje = regla_aplicable["porcentaje_comision"]
+                    monto_comision = comision_model.calcular(fila["total_ventas"], porcentaje)
+                else:
+                    porcentaje = 0
+                    monto_comision = 0
+                filas.append({
+                    "vendedor_nombre": f"{fila['nombre']} {fila['apellido']}",
+                    "total_ventas": fila["total_ventas"],
+                    "porcentaje_comision": porcentaje,
+                    "monto_comision": monto_comision,
+                })
     return render_template(
         "ventas/reporte.html",
         filas =filas,
         fecha_inicio = fecha_inicio,
         fecha_fin = fecha_fin,
+        error=error,
     )
