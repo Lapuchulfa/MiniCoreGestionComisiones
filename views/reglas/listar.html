@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Reglas de comisión{% endblock %}
+{% block content %}
+    <h1>Reglas de comisión</h1>
+
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Monto mínimo</th>
+                <th>Porcentaje de comisión</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reglas %}
+            <tr>
+                <td>${{ r.monto_minimo }}</td>
+                <td>{{ (r.porcentaje_comision * 100) | round(0, 'floor') | int }}%</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="2">No hay reglas configuradas.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

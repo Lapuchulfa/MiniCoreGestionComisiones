@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Comisiones{% endblock %}
+{% block content %}
+    <h1>Comisiones</h1>
+
+    <div class="filtros">
+        <a href="{{ url_for('comision_model.listar') }}" class="{{ 'activo' if not estado }}">Todas</a>
+        <a href="{{ url_for('comision_model.listar', estado='pendiente') }}"
+           class="{{ 'activo' if estado == 'pendiente' }}">Pendientes</a>
+        <a href="{{ url_for('comision_model.listar', estado='pagada') }}"
+           class="{{ 'activo' if estado == 'pagada' }}">Pagadas</a>
+    </div>
+
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Venta</th>
+                <th>Vendedor</th>
+                <th>% Aplicado</th>
+                <th>Monto comisión</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in comisiones %}
+            <tr>
+                <td>{{ c.venta_descripcion }}</td>
+                <td>{{ c.vendedor_nombre }} {{ c.vendedor_apellido }}</td>
+                <td>{{ (c.porcentaje_aplicado * 100) | round(0, 'floor') | int }}%</td>
+                <td>${{ c.monto_comision }}</td>
+                <td>{{ c.estado }}</td>
+                <td>
+                    {% if c.estado == 'pendiente' %}
+                    <form action="{{ url_for('comision_model.pagar', comision_id=c.id) }}" method="POST">
+                        <button type="submit" class="boton-pequeno">Marcar pagada</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6">No hay comisiones registradas.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Gestión de Comisiones{% endblock %}
+{% block content %}
+    <h1>Gestión de Comisiones</h1>
+
+    <form method="GET" class="formulario-filtro">
+        <label for="fecha_inicio">Fecha de Inicio</label>
+        <input type="date" id="fecha_inicio" name="fecha_inicio"
+               value="{{ fecha_inicio or '' }}" required>
+
+        <label for="fecha_fin">Fecha de Fin</label>
+        <input type="date" id="fecha_fin" name="fecha_fin"
+               value="{{ fecha_fin or '' }}" required>
+
+        <button type="submit" class="boton">Buscar</button>
+    </form>
+
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Vendedor</th>
+                <th>Total Ventas</th>
+                <th>Porcentaje Comisión</th>
+                <th>Comisión</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fila in filas %}
+            <tr>
+                <td>{{ fila.vendedor_nombre }}</td>
+                <td>${{ fila.total_ventas }}</td>
+                <td>{{ (fila.porcentaje_comision * 100) | round(0, 'floor') | int }}%</td>
+                <td>${{ fila.monto_comision }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4">
+                {% if fecha_inicio and fecha_fin %}
+                    No hay ventas en ese rango de fechas.
+                {% else %}
+                    Elige un rango de fechas y presiona Buscar.
+                {% endif %}
+            </td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
