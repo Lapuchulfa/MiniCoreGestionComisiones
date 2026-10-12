@@ -7,6 +7,7 @@ El proyecto está construido con el patrón **MVC (Modelo, Vista, Controlador)**
 <p>https://minicore-gestion-comisiones.onrender.com/</p>
 
 <h2>Ejecución en vivo</h2>
+https://youtu.be/H2s5zdZjHpI
 
 <h2>Funcionalidades</h2>
 <p>- Vendedores: listar, crear y editar vendedores.
